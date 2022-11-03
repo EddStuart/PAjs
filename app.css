@@ -1,0 +1,237 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 10px;
+}
+
+.wrapper {
+  display: grid;
+  grid-gap: 2.5px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header"
+    "content";
+}
+
+@media (max-width: 500px) {
+  .wrapper {
+    grid-template-columns: 4fr;
+    grid-template-areas:
+      "header"
+      "content";
+  }
+}
+
+header {
+  grid-area: header;
+  border-style: solid;
+  border-color: black;
+  padding: 5px;
+}
+
+article {
+  grid-area: content;
+  border-style: solid;
+  border-color: black;
+  padding: 10px;
+}
+
+.h1Header {
+  text-align: center;
+}
+
+/* App Page */
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  background-color: lightblue;
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 2px 16px;
+}
+
+/* AddAdminHost Page */
+.adminHostContainer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.adminHostContainer:hover {
+  background-color: lightblue;
+}
+
+.adminHostName {
+  padding: 0.75rem;
+}
+
+.h3header {
+  padding-left: 0.75rem;
+}
+
+div.twoColForm {
+  display: grid;
+  grid-template-columns: 30% 50%;
+  grid-gap: 2.5px;
+  padding: 0.75rem;
+}
+
+div.twoColForm label {
+  text-align: right;
+  padding: 1px;
+}
+
+div.twoColForm input {
+  text-align: center;
+  padding: 1px;
+}
+
+div.oneColForm {
+  display: flex;
+  /* justify-content: center; */
+  align-self: center;
+  flex-direction: row;
+  margin: 5px;
+  width: 20%;
+}
+
+div.newAdminHost {
+  border-style: solid;
+  margin: 2.5px;
+}
+
+button:hover {
+  background-color: lightblue;
+}
+
+.serverContainer {
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
+  margin: 5px;
+  padding: 10px;
+  text-align: center;
+}
+
+.serverContainer:hover {
+  background-color: lightblue;
+}
+
+.loginContainer {
+  padding: 1rem;
+  border-style: solid;
+}
+
+.loginContainer input {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+button {
+  padding: 1rem;
+}
+
+nav {
+  grid-area: nav;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border-style: solid;
+  border-color: black;
+}
+
+li {
+  display: block;
+
+  color: #000;
+  padding: 4px 8px;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+li:hover {
+  background-color: #555;
+  color: white;
+}
+
+.activeItem {
+  background-color: #555;
+  color: white;
+}
+
+/* End of Standard CSS here */
+
+.wrapperIncNav {
+  display: grid;
+  grid-gap: 2.5px;
+  grid-template-areas:
+    "header header header"
+    "nav content content"
+    "nav content content";
+  grid-template-columns: max-content;
+}
+
+@media (max-width: 500px) {
+  .wrapperIncNav {
+    grid-template-columns: 4fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "content";
+  }
+}
+
+.activeItem {
+  background-color: #555;
+  color: white;
+}
+
+.item {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.item:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.articleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowContainer {
+  display: flex;
+  padding: 2px;
+}
+
+.rowContainer:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  background-color: #555;
+  color: white;
+}
+
+.name {
+  flex: 1;
+  padding: 5px;
+}
+
+.detail {
+  flex: auto;
+  padding: 5px;
+}
+
+.detail::placeholder {
+  color: black;
+}
