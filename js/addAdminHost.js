@@ -84,7 +84,7 @@ function updateAdminHost() {
     transferLabel.innerHTML = 'Transfer Protocol:';
     const transferInput = document.createElement('input');
     transferInput.setAttribute('type', 'text');
-    // transferInput.setAttribute('id', 'sTransferProtocol');
+    transferInput.setAttribute('id', 'sTransferProtocol');
     transferInput.setAttribute('name', 'transferProtocol');
     transferInput.setAttribute('value', 'http');
     transferInput.setAttribute('required', '');
@@ -94,7 +94,7 @@ function updateAdminHost() {
     adminHostNameLabel.innerHTML = 'Adminhost:';
     const adminHostNameInput = document.createElement('input');
     adminHostNameInput.setAttribute('type', 'text');
-    // adminHostNameInput.setAttribute('id', 'sAdminHostName');
+    adminHostNameInput.setAttribute('id', 'sAdminHostName');
     adminHostNameInput.setAttribute('name', 'adminHostName');
     adminHostNameInput.setAttribute('value', 'localhost');
     adminHostNameInput.setAttribute('required', '');
@@ -104,7 +104,7 @@ function updateAdminHost() {
     adminHostNumberLabel.innerHTML = 'Adminhost Port Number:';
     const adminHostNumberInput = document.createElement('input');
     adminHostNumberInput.setAttribute('type', 'number');
-    // adminHostNumberInput.setAttribute('id', 'nAdminPortNumber');
+    adminHostNumberInput.setAttribute('id', 'nAdminPortNumber');
     adminHostNumberInput.setAttribute('name', 'adminPortNumber');
     adminHostNumberInput.setAttribute('value', '5895');
     adminHostNumberInput.setAttribute('required', '');
