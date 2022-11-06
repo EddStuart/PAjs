@@ -235,3 +235,20 @@ li:hover {
 .detail::placeholder {
   color: black;
 }
+
+.itemContainer {
+  flex: auto;
+  /* width: 10%; */
+  border-radius: 2px;
+  border-color: black;
+  box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
+  margin: 2px;
+  padding: 5px;
+  text-align: center;
+}
+
+.itemContainer:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  background-color: #555;
+  color: white;
+}

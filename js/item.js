@@ -91,7 +91,6 @@ function loadItem() {
     let serverUrl = activeTM1Server + activeItem;
     const userpass = sessionStorage.getItem("serverLogin");
 
-
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic " + userpass);
@@ -122,7 +121,11 @@ function loadItem() {
     function printValues(items) {
         for (var k in items) {
             if (items[k] instanceof Object) {
-                printValues(items[k]);
+                if (k !== 'Parameters') {
+                    if (k !== 'Variables') {
+                        printValues(items[k]);
+                    }
+                }
             } else {
                 createRow(k, items[k]);
             };
@@ -131,32 +134,58 @@ function loadItem() {
 };
 
 function createRow(k, item) {
-    const rowContainer = document.createElement('div');
-    rowContainer.classList.add('rowContainer');
-
-    const row = document.createElement('div');
-    row.classList.add('row');
-    const rowName = document.createElement('div');
-    rowName.classList.add('name');
-    const rowDetail = document.createElement('input');
-    rowDetail.setAttribute("type", "text")
-    rowDetail.setAttribute("placeholder", item)
-    rowDetail.classList.add('detail');
-    rowContainer.addEventListener("click", function (event) {
-        console.log(k, item);
-        selectRow(k)
-    });
-    rowName.innerHTML = k
-    rowDetail.innerHTML = item
-
+    // Treat Key Objects differently
     getWrapper.appendChild(setArticleContainer);
-    setArticleContainer.appendChild(rowContainer);
-    rowContainer.appendChild(rowName);
-    rowContainer.appendChild(rowDetail);
+
+    if (activeItem === 'Cubes' || 'Processes') {
+        if (k === 'Name') {
+            // console.log(k, item);
+            const itemContainer = document.createElement('div');
+            itemContainer.classList.add('itemContainer');
+            const itemRow = document.createElement('div');
+            itemRow.classList.add('itemRow');
+            itemRow.innerHTML = item;
+            setArticleContainer.appendChild(itemContainer);
+            itemContainer.appendChild(itemRow);
+            itemContainer.addEventListener("click", function (event) {
+                selectObject(item);
+            })
+        }
+    } else {
+        // Standard listings
+        const rowContainer = document.createElement('div');
+        rowContainer.classList.add('rowContainer');
+
+        const row = document.createElement('div');
+        row.classList.add('row');
+        const rowName = document.createElement('div');
+        rowName.classList.add('name');
+        const rowDetail = document.createElement('input');
+        rowDetail.setAttribute("type", "text")
+        rowDetail.setAttribute("placeholder", item)
+        rowDetail.classList.add('detail');
+        rowContainer.addEventListener("click", function (event) {
+            console.log(k, item);
+            selectRow(k)
+        });
+        rowName.innerHTML = k
+        rowDetail.innerHTML = item
+        // getWrapper.appendChild(setArticleContainer);
+        setArticleContainer.appendChild(rowContainer);
+        rowContainer.appendChild(rowName);
+        rowContainer.appendChild(rowDetail);
+    }
 }
+
 
 function selectRow(k) {
     console.log(k);
+}
+
+function selectObject(item) {
+    console.log(item);
+    localStorage.setItem("activeObject", item);
+    window.location = '../pages/object.html';
 }
 
 
