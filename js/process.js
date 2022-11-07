@@ -79,15 +79,50 @@ function createServerCard(server) {
 }
 
 function selectServer(server) {
-    console.log(server);
+    const getAllServerContainer = document.querySelector('.allServerContainer');
 
     let targetTM1Server = server.Host + '/api/v1/';
     localStorage.setItem("targetTM1Server", JSON.stringify(targetTM1Server));
-
-    setArticleContainer.removeChild(setAllServerContainer);
-
-
+    setArticleContainer.removeChild(getAllServerContainer);
+    console.log(targetTM1Server);
+    console.log(activeTM1Server);
+    getProcess();
 }
+
+function getProcess() {
+    const processURL = activeTM1Server + activeItem + '(\'' + activeObject + '\')'
+    const userpass = sessionStorage.getItem("serverLogin");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Accept", "application/json;odata.metadata=none");
+    myHeaders.append("TM1-SessionContext", "PAjs Client");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    fetch(processURL, requestOptions)
+        .then(async (resp) => {
+            if (!resp.ok) throw resp.statusText;
+            let process = await resp.json();
+            return process;
+        })
+        .then((process) => {
+            console.log(process);
+            // sessionStorage.setItem("activeProcess", process);
+
+        })
+        .catch((err) => {
+            console.warn(err.message);
+        });
+}
+
+function postProcess() { }
 
 
 
