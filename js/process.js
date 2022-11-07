@@ -33,100 +33,63 @@ btnCopyObject.addEventListener("click", function (event) {
 function copyObject() {
     adminHosts.forEach(adminHost => {
         const adminHostContainer = document.createElement('div');
-        setArticleContainer.appendChild(adminHostContainer);
-        adminHostContainer.innerHTML = adminHost
         adminHostContainer.classList.add('adminHostContainer');
+        setArticleContainer.appendChild(adminHostContainer);
+        const adminHostName = document.createElement('div');
+        adminHostContainer.appendChild(adminHostName);
+        adminHostName.innerHTML = adminHost
+        adminHostName.classList.add('adminHostName');
+        const setAllServerContainer = document.createElement('div');
+        setAllServerContainer.classList.add('allServerContainer');
+        setArticleContainer.appendChild(setAllServerContainer);
         adminHostContainer.addEventListener("click", function (event) {
-            selectAdminHost(adminHost)
+            selectAdminHostCopy(adminHost)
         });
     })
 }
 
+async function selectAdminHostCopy(activeAdminHost) {
+    // Add all Servers under the defined adminhost
+
+    const res = await fetch(activeAdminHost);
+    const data = await res.json();
+    const servers = data.value;
+    console.log(servers);
+
+    for (server of servers) {
+        createServerCard(server);
+    }
+}
+
+function createServerCard(server) {
+    const getAllServerContainer = document.querySelector('.allServerContainer');
+    const serverContainer = document.createElement('div');
+    serverContainer.classList.add('serverContainer');
+    serverContainer.addEventListener("click", function (event) {
+        selectServer(server)
+    });
+
+    const serverDetail = document.createElement('div');
+    const serverName = document.createElement('h3');
+    serverName.innerHTML = server.Name;
+
+    getAllServerContainer.appendChild(serverContainer);
+    serverContainer.appendChild(serverDetail);
+    serverDetail.appendChild(serverName);
+}
+
+function selectServer(server) {
+    console.log(server);
+
+    let targetTM1Server = server.Host + '/api/v1/';
+    localStorage.setItem("targetTM1Server", JSON.stringify(targetTM1Server));
+
+    setArticleContainer.removeChild(setAllServerContainer);
 
 
+}
 
 
-// function loadObject() {
-//     let serverUrl = activeTM1Server + activeItem + '(\'' + activeObject + '\')';
-//     const userpass = sessionStorage.getItem("serverLogin");
-
-//     var myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "application/json");
-//     myHeaders.append("Authorization", "Basic " + userpass);
-//     myHeaders.append("Accept", "application/json;odata.metadata=none");
-//     myHeaders.append("TM1-SessionContext", "PAjs Client");
-
-//     var requestOptions = {
-//         method: 'GET',
-//         headers: myHeaders,
-//         redirect: 'follow',
-//         credentials: 'include'
-//     };
-
-//     fetch(serverUrl, requestOptions)
-//         .then(async (resp) => {
-//             if (!resp.ok) throw resp.statusText;
-//             let objectDetails = await resp.json();
-//             return objectDetails;
-//         })
-//         .then((objectDetails) => {
-//             console.log(objectDetails);
-//             printValues(objectDetails);
-//         })
-//         .catch((err) => {
-//             console.warn(err.message);
-//         });
-
-//     function printValues(objectDetails) {
-//         for (var i in objectDetails) {
-//             if (objectDetails[i] instanceof Object) {
-//                 printValues(objectDetails[i]);
-//             } else {
-//                 createRow(i, objectDetails[i]);
-//             };
-//         }
-//     };
-// };
-
-// function createRow(i, objectDetails) {
-//     getWrapper.appendChild(setArticleContainer);
-//     // if (activeItem === 'Cubes' || 'Processes') {
-//     //     if (k === 'Name') {
-//     //         // console.log(k, item);
-//     //         const itemContainer = document.createElement('div');
-//     //         itemContainer.classList.add('itemContainer');
-//     //         const itemRow = document.createElement('div');
-//     //         itemRow.classList.add('itemRow');
-//     //         itemRow.innerHTML = item;
-//     //         setArticleContainer.appendChild(itemContainer);
-//     //         itemContainer.appendChild(itemRow);
-//     //         itemContainer.addEventListener("click", function (event) {
-//     //             selectObject(item);
-//     //         })
-//     //     }
-//     // } else {
-//     // Standard listings
-//     const objectDetailsContainer = document.createElement('div');
-//     objectDetailsContainer.classList.add('objectDetailsContainer');
-
-//     const row = document.createElement('div');
-//     row.classList.add('objectRow');
-//     const rowName = document.createElement('div');
-//     rowName.classList.add('name');
-//     const rowDetail = document.createElement('div');
-//     rowName.innerHTML = i;
-//     rowDetail.innerHTML = objectDetails;
-//     rowDetail.classList.add('objectDetail');
-
-//     // rowName.innerHTML = k
-//     // rowDetail.innerHTML = item
-//     // getWrapper.appendChild(setArticleContainer);
-//     setArticleContainer.appendChild(objectDetailsContainer);
-//     objectDetailsContainer.appendChild(rowName);
-//     objectDetailsContainer.appendChild(rowDetail);
-// }
-
-// loadObject();
 
 ///// Structure of the output
 // - Process Name

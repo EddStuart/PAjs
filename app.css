@@ -113,10 +113,10 @@ button:hover {
 
 .serverContainer {
   width: 30%;
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
   margin: 5px;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 
@@ -136,6 +136,7 @@ button:hover {
 
 button {
   padding: 1rem;
+  margin: 1rem;
 }
 
 nav {
@@ -152,7 +153,6 @@ ul {
 
 li {
   display: block;
-
   color: #000;
   padding: 4px 8px;
   margin-left: 1rem;
@@ -240,8 +240,8 @@ li:hover {
   flex: auto;
   /* width: 10%; */
   border-radius: 2px;
-  border-color: black;
-  box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
+  border-style: solid;
+  /* box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5); */
   margin: 2px;
   padding: 5px;
   text-align: center;

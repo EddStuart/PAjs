@@ -185,7 +185,12 @@ function selectRow(k) {
 function selectObject(item) {
     console.log(item);
     localStorage.setItem("activeObject", item);
-    window.location = '../pages/object.html';
+    if(activeItem === 'Processes') {
+        window.location = '../pages/process.html';
+    } else {
+        window.location = '../pages/object.html';
+    }
+    
 }
 
 
