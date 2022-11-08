@@ -32,17 +32,17 @@ btnCopyObject.addEventListener("click", function (event) {
 
 function copyObject() {
     adminHosts.forEach(adminHost => {
-        const adminHostContainer = document.createElement('div');
-        adminHostContainer.classList.add('adminHostContainer');
-        setArticleContainer.appendChild(adminHostContainer);
+        const copyAdminHostContainer = document.createElement('div');
+        copyAdminHostContainer.classList.add('copyAdminHostContainer');
+        setArticleContainer.appendChild(copyAdminHostContainer);
         const adminHostName = document.createElement('div');
-        adminHostContainer.appendChild(adminHostName);
+        copyAdminHostContainer.appendChild(adminHostName);
         adminHostName.innerHTML = adminHost
         adminHostName.classList.add('adminHostName');
         const setAllServerContainer = document.createElement('div');
         setAllServerContainer.classList.add('allServerContainer');
         setArticleContainer.appendChild(setAllServerContainer);
-        adminHostContainer.addEventListener("click", function (event) {
+        copyAdminHostContainer.addEventListener("click", function (event) {
             selectAdminHostCopy(adminHost)
         });
     })
@@ -70,12 +70,10 @@ function createServerCard(server) {
     });
 
     const serverDetail = document.createElement('div');
-    const serverName = document.createElement('h3');
-    serverName.innerHTML = server.Name;
+    serverDetail.innerHTML = server.Name;
 
     getAllServerContainer.appendChild(serverContainer);
     serverContainer.appendChild(serverDetail);
-    serverDetail.appendChild(serverName);
 }
 
 function selectServer(server) {
@@ -113,16 +111,20 @@ function getProcess() {
             return process;
         })
         .then((process) => {
-            console.log(process);
+            // console.log(process);
+            // Creates [object Object]
             // sessionStorage.setItem("activeProcess", process);
-
+            postProcess(process)
         })
         .catch((err) => {
             console.warn(err.message);
         });
 }
 
-function postProcess() { }
+function postProcess(process) {
+    console.log("Now you see me");
+    console.log(process);
+}
 
 
 
