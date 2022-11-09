@@ -88,7 +88,8 @@ function selectServer(server) {
 }
 
 function getProcess() {
-    const processURL = activeTM1Server + activeItem + '(\'' + activeObject + '\')'
+    const processParams = '?$select=Name,HasSecurityAccess,PrologProcedure,MetadataProcedure,DataProcedure,EpilogProcedure,Parameters,Variables,UIData,VariablesUIData,DataSource/Type,DataSource/dataSourceNameForServer,DataSource/dataSourceNameForClient,DataSource/asciiDecimalSeparator,DataSource/asciiDelimiterChar,DataSource/asciiDelimiterType,DataSource/asciiHeaderRecords,DataSource/asciiQuoteCharacter,DataSource/asciiThousandSeparator,DataSource/view,DataSource/query,DataSource/userName,DataSource/password,DataSource/usesUnicode,DataSource/subset'
+    const processURL = activeTM1Server + activeItem + '(\'' + activeObject + '\')' + processParams;
     const userpass = sessionStorage.getItem("serverLogin");
 
     var myHeaders = new Headers();
@@ -111,9 +112,7 @@ function getProcess() {
             return process;
         })
         .then((process) => {
-            // console.log(process);
-            // Creates [object Object]
-            // sessionStorage.setItem("activeProcess", process);
+            console.log(process);
             postProcess(process)
         })
         .catch((err) => {
@@ -122,39 +121,125 @@ function getProcess() {
 }
 
 function postProcess(process) {
-    console.log("Now you see me");
-    console.log(process);
+    // console.log(process);
+
+    const processURL = activeTM1Server + activeItem;
+    const userpass = sessionStorage.getItem("serverLogin");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Accept", "application/json;odata.metadata=none");
+    myHeaders.append("TM1-SessionContext", "PAjs Client");
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: process,
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    // fetch(processURL, requestOptions)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
+
+    const processName = 'Name:' + process.Name;
+    const processHasSecurityAccess = 'HasSecurityAccess:' + process.HasSecurityAccess;
+
+    const processPrologProcedure = 'PrologProcedure:' + process.PrologProcedure;
+    const processMetaDataProcedure = 'MetaDataProcedure:' + process.MetaProcedure;
+    const processDataProcedure = 'DataProcedure:' + process.DataProcedure;
+    const processEpilogProcedure = 'EpilogProcedure:' + process.EpilogProcedure;
+
+    const processParameterCount = process.Parameters.length;
+
+    // for (let i = 0; i < processParameterCount; i++) {
+    //     console.log('Name:' + process.Parameters[i].Name);
+    //     console.log('Prompt:' + process.Parameters[i].Prompt);
+    //     console.log('Type:' + process.Parameters[i].Type);
+    //     console.log('Value  :' + process.Parameters[i].Value);
+    // }
+
+    const processVariableCount = process.Variables.length;
+
+    // for (let i = 0; i < processVariableCount; i++) {
+    //     console.log('EndByte:' + process.Variables[i].EndByte);
+    //     console.log('Name:' + process.Variables[i].Name);
+    //     console.log('Position:' + process.Variables[i].Position);
+    //     console.log('StartByte:' + process.Variables[i].StartByte);
+    //     console.log('Type:' + process.Variables[i].Type);
+    // }
+
+    const processUIData = process.UIData;
+
+    const processVariableUIDataCount = process.VariablesUIData.length;
+
+    // for (let i = 0; i < processVariableUIDataCount; i++) {
+    //     console.log([i] + ':' + process.VariablesUIData[i]);
+    // }
+
+    const processDataSourceType = process.DataSource.Type;
+    const processDataSourceNameForServer = process.DataSource.dataSourceNameForServer;
+    const processDataSourceNameForClient = process.DataSource.dataSourceNameForClient;
+    const processDataSourceAsciiDecimalSeparator = process.DataSource.asciiDecimalSeparator;
+
+    console.log(processDataSourceType);
+    console.log(processDataSourceNameForServer);
+    console.log(processDataSourceNameForClient);
+    console.log(processDataSourceAsciiDecimalSeparator);
+    // console.log(processDataSourceasciiDelimiterChar);
+    // console.log(processDataSourceasciiDelimiterType);
+    // console.log(processDataSourceasciiDelimiterHeaderRecords);
+    // console.log(processDataSourceasciiDelimiterQuoteCharacter);
+    // console.log(processDataSourceasciiDelimiterThousandSeparator);
+
+    // console.log(processDataSourceView);
+    // console.log(processDataSourceQuery);
+    // console.log(processDataSourceUserName);
+    // console.log(processDataSourcePassword);
+    // console.log(processDataSourceusesUnicode);
+    // console.log(processDataSourceSubset);
+
+    /* Name,
+    HasSecurityAccess,
+    PrologProcedure,
+    MetadataProcedure,
+    DataProcedure,
+    EpilogProcedure,
+    Parameters,
+    Variables,
+    UIData,
+    VariablesUIData,
+    DataSource/Type,
+    DataSource/dataSourceNameForServer,
+    DataSource/dataSourceNameForClient,
+    DataSource/asciiDecimalSeparator,
+    DataSource/asciiDelimiterChar,
+    DataSource/asciiDelimiterType,
+    DataSource/asciiHeaderRecords,
+    DataSource/asciiQuoteCharacter,
+    DataSource/asciiThousandSeparator,
+    DataSource/view,
+    DataSource/query,
+    DataSource/userName,
+    DataSource/password,
+    DataSource/usesUnicode,
+    DataSource/subset'
+    */
+
+
+    // console.log(processName);
+    // console.log(processHasSecurityAccess);
+    // console.log(processPrologProcedure);
+    // console.log(processMetaDataProcedure);
+    // console.log(processDataProcedure);
+    // console.log(processEpilogProcedure);
+    // console.log(processParameterCount);
+
+
+    // console.log(processUIData);
+    // console.log(processVariablesUIData);
 }
-
-
-
-///// Structure of the output
-// - Process Name
-
-// - Has Security Access
-
-// - Prolog
-// - Metadata
-// - Data
-// - Epilog
-
-// - Datasource
-// 	Type: TM1CubeView
-// 	DatasourceNameforClient
-// 	DatasourceNameforServer
-// 	View
-// - Parameters
-// 	pCopyFrom
-// 	pCopyTo
-// - Variables
-// 	vorganisation
-// 	vChannel
-// 	vproduct
-// 	vMonth
-// 	vYear
-// 	vAccount
-// 	vVersion
-// 	vValue
-
-
 
