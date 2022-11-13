@@ -49,7 +49,6 @@ function copyObject() {
 }
 
 async function selectAdminHostCopy(activeAdminHost) {
-    // Add all Servers under the defined adminhost
 
     const res = await fetch(activeAdminHost);
     const data = await res.json();
@@ -80,8 +79,7 @@ function selectServer(server) {
     const getAllServerContainer = document.querySelector('.allServerContainer');
 
     let targetTM1Server = server.Host + '/api/v1/';
-    localStorage.setItem("targetTM1Server", JSON.stringify(targetTM1Server));
-    setArticleContainer.removeChild(getAllServerContainer);
+    localStorage.setItem("targetTM1Server", targetTM1Server);
     console.log(targetTM1Server);
     console.log(activeTM1Server);
     getProcess();
@@ -108,22 +106,25 @@ function getProcess() {
     fetch(processURL, requestOptions)
         .then(async (resp) => {
             if (!resp.ok) throw resp.statusText;
-            let process = await resp.json();
+            let process = await resp.text();
             return process;
         })
         .then((process) => {
-            console.log(process);
             postProcess(process)
         })
         .catch((err) => {
-            console.warn(err.message);
+            console.log(err);
         });
 }
 
 function postProcess(process) {
-    // console.log(process);
+    const targetTM1Server = localStorage.getItem("targetTM1Server");
+    const activeItem = localStorage.getItem("activeItem");
+    const processURL = targetTM1Server + activeItem;
+    // console.log(processURL);
+    // console.log(targetTM1Server);
+    // console.log(activeItem);
 
-    const processURL = activeTM1Server + activeItem;
     const userpass = sessionStorage.getItem("serverLogin");
 
     var myHeaders = new Headers();
@@ -140,106 +141,8 @@ function postProcess(process) {
         credentials: 'include'
     };
 
-    // fetch(processURL, requestOptions)
-    //     .then(response => response.text())
-    //     .then(result => console.log(result))
-    //     .catch(error => console.log('error', error));
-
-    const processName = 'Name:' + process.Name;
-    const processHasSecurityAccess = 'HasSecurityAccess:' + process.HasSecurityAccess;
-
-    const processPrologProcedure = 'PrologProcedure:' + process.PrologProcedure;
-    const processMetaDataProcedure = 'MetaDataProcedure:' + process.MetaProcedure;
-    const processDataProcedure = 'DataProcedure:' + process.DataProcedure;
-    const processEpilogProcedure = 'EpilogProcedure:' + process.EpilogProcedure;
-
-    const processParameterCount = process.Parameters.length;
-
-    // for (let i = 0; i < processParameterCount; i++) {
-    //     console.log('Name:' + process.Parameters[i].Name);
-    //     console.log('Prompt:' + process.Parameters[i].Prompt);
-    //     console.log('Type:' + process.Parameters[i].Type);
-    //     console.log('Value  :' + process.Parameters[i].Value);
-    // }
-
-    const processVariableCount = process.Variables.length;
-
-    // for (let i = 0; i < processVariableCount; i++) {
-    //     console.log('EndByte:' + process.Variables[i].EndByte);
-    //     console.log('Name:' + process.Variables[i].Name);
-    //     console.log('Position:' + process.Variables[i].Position);
-    //     console.log('StartByte:' + process.Variables[i].StartByte);
-    //     console.log('Type:' + process.Variables[i].Type);
-    // }
-
-    const processUIData = process.UIData;
-
-    const processVariableUIDataCount = process.VariablesUIData.length;
-
-    // for (let i = 0; i < processVariableUIDataCount; i++) {
-    //     console.log([i] + ':' + process.VariablesUIData[i]);
-    // }
-
-    const processDataSourceType = process.DataSource.Type;
-    const processDataSourceNameForServer = process.DataSource.dataSourceNameForServer;
-    const processDataSourceNameForClient = process.DataSource.dataSourceNameForClient;
-    const processDataSourceAsciiDecimalSeparator = process.DataSource.asciiDecimalSeparator;
-
-    console.log(processDataSourceType);
-    console.log(processDataSourceNameForServer);
-    console.log(processDataSourceNameForClient);
-    console.log(processDataSourceAsciiDecimalSeparator);
-    // console.log(processDataSourceasciiDelimiterChar);
-    // console.log(processDataSourceasciiDelimiterType);
-    // console.log(processDataSourceasciiDelimiterHeaderRecords);
-    // console.log(processDataSourceasciiDelimiterQuoteCharacter);
-    // console.log(processDataSourceasciiDelimiterThousandSeparator);
-
-    // console.log(processDataSourceView);
-    // console.log(processDataSourceQuery);
-    // console.log(processDataSourceUserName);
-    // console.log(processDataSourcePassword);
-    // console.log(processDataSourceusesUnicode);
-    // console.log(processDataSourceSubset);
-
-    /* Name,
-    HasSecurityAccess,
-    PrologProcedure,
-    MetadataProcedure,
-    DataProcedure,
-    EpilogProcedure,
-    Parameters,
-    Variables,
-    UIData,
-    VariablesUIData,
-    DataSource/Type,
-    DataSource/dataSourceNameForServer,
-    DataSource/dataSourceNameForClient,
-    DataSource/asciiDecimalSeparator,
-    DataSource/asciiDelimiterChar,
-    DataSource/asciiDelimiterType,
-    DataSource/asciiHeaderRecords,
-    DataSource/asciiQuoteCharacter,
-    DataSource/asciiThousandSeparator,
-    DataSource/view,
-    DataSource/query,
-    DataSource/userName,
-    DataSource/password,
-    DataSource/usesUnicode,
-    DataSource/subset'
-    */
-
-
-    // console.log(processName);
-    // console.log(processHasSecurityAccess);
-    // console.log(processPrologProcedure);
-    // console.log(processMetaDataProcedure);
-    // console.log(processDataProcedure);
-    // console.log(processEpilogProcedure);
-    // console.log(processParameterCount);
-
-
-    // console.log(processUIData);
-    // console.log(processVariablesUIData);
+    fetch(processURL, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 }
-
