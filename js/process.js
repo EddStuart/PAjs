@@ -21,16 +21,44 @@ let adminHosts = JSON.parse(localStorage.getItem("adminHosts"));
 setH1.innerHTML = activeObject + ' details:';
 setArticleContainer.appendChild(setH1);
 
-// Add Button to Copy to New Server
+// Add Button to Copy Process
 const btnCopyObject = document.createElement('button');
-btnCopyObject.innerHTML = "Copy Object to another model";
+btnCopyObject.innerHTML = "Copy Process to another model";
 setArticleContainer.appendChild(btnCopyObject);
 
 btnCopyObject.addEventListener("click", function (event) {
-    copyObject();
+    showAdminHosts();
+    setArticleContainer.removeChild(btnUpdateObject);
+    setArticleContainer.removeChild(btnDeleteObject);
+    localStorage.setItem('CRUD', 'Post');
 })
 
-function copyObject() {
+// Add Button to Update Process
+const btnUpdateObject = document.createElement('button');
+btnUpdateObject.innerHTML = "Update Process on another model";
+setArticleContainer.appendChild(btnUpdateObject);
+
+btnUpdateObject.addEventListener("click", function (event) {
+    showAdminHosts();
+    setArticleContainer.removeChild(btnCopyObject);
+    setArticleContainer.removeChild(btnDeleteObject);
+    localStorage.setItem('CRUD', 'Patch');
+})
+
+// Add Button to Delete Process
+const btnDeleteObject = document.createElement('button');
+btnDeleteObject.innerHTML = "Delete Process on another model";
+setArticleContainer.appendChild(btnDeleteObject);
+
+btnDeleteObject.addEventListener("click", function (event) {
+    showAdminHosts();
+    setArticleContainer.removeChild(btnCopyObject);
+    setArticleContainer.removeChild(btnUpdateObject);
+    localStorage.setItem('CRUD', 'Delete');
+})
+
+
+function showAdminHosts() {
     adminHosts.forEach(adminHost => {
         const copyAdminHostContainer = document.createElement('div');
         copyAdminHostContainer.classList.add('copyAdminHostContainer');
@@ -43,12 +71,12 @@ function copyObject() {
         setAllServerContainer.classList.add('allServerContainer');
         setArticleContainer.appendChild(setAllServerContainer);
         copyAdminHostContainer.addEventListener("click", function (event) {
-            selectAdminHostCopy(adminHost)
+            selectAdminHost(adminHost)
         });
     })
 }
 
-async function selectAdminHostCopy(activeAdminHost) {
+async function selectAdminHost(activeAdminHost) {
 
     const res = await fetch(activeAdminHost);
     const data = await res.json();
@@ -76,12 +104,8 @@ function createServerCard(server) {
 }
 
 function selectServer(server) {
-    const getAllServerContainer = document.querySelector('.allServerContainer');
-
     let targetTM1Server = server.Host + '/api/v1/';
     localStorage.setItem("targetTM1Server", targetTM1Server);
-    console.log(targetTM1Server);
-    console.log(activeTM1Server);
     getProcess();
 }
 
@@ -110,7 +134,19 @@ function getProcess() {
             return process;
         })
         .then((process) => {
-            postProcess(process)
+            // Add Logic here for post patch delete etc..
+            const CRUD = localStorage.getItem('CRUD');
+            if(CRUD === 'Post') {
+                postProcess(process);
+                console.log(CRUD);
+            } else if (CRUD === 'Patch') {
+                patchProcess(process);
+                console.log(CRUD);
+            }
+            else {
+                console.log('Delete me!');
+                deleteProcess(process);
+            }
         })
         .catch((err) => {
             console.log(err);
@@ -138,20 +174,53 @@ async function postProcess(process) {
         credentials: 'include'
     };
 
+    fetch(processURL, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) })
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            const errorString = String(error);
+            const errorArray = errorString.split(':');
+            const errorMsg = errorArray[4].slice(1, -4) + " on target server";
 
-    // Promise Pending gives PromiseResult Error Code and Message
-    // await fetch(processURL, requestOptions)
-    //     .then(response => {
-    //         // console.log(response.text())
-    //         console.log(response);
-    //         console.log(response.body);
-    //         console.log(response.message);
-    //         console.log(response.errors);
-    //         console.log(response.text);
-    //     })
-    //     .then(result => console.log(result))
-    //     .catch(error => console.log('error', error));
+            console.log(errorMsg);
 
+            const getAllServerContainer = document.querySelector('.allServerContainer');
+            const errorContainer = document.createElement('div');
+            errorContainer.classList.add("error");
+            getAllServerContainer.appendChild(errorContainer);
+            errorContainer.innerHTML = errorMsg;
+        });
+
+};
+
+async function patchProcess(process) {
+    const targetTM1Server = localStorage.getItem("targetTM1Server");
+    const activeItem = localStorage.getItem("activeItem");
+    const processURL = targetTM1Server + activeItem + "('" + activeObject + "')";
+    console.log(processURL);
+
+    const userpass = sessionStorage.getItem("serverLogin");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Accept", "application/json;odata.metadata=none");
+    myHeaders.append("TM1-SessionContext", "PAjs Client");
+
+    var requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: process,
+        redirect: 'follow',
+        credentials: 'include'
+    };
 
     fetch(processURL, requestOptions)
         .then(response => {
@@ -163,18 +232,53 @@ async function postProcess(process) {
             }
         })
         .catch(error => {
-            console.log('caught it!', error);
-
             console.log(error);
-
             const getAllServerContainer = document.querySelector('.allServerContainer');
             const errorContainer = document.createElement('div');
+            errorContainer.classList.add("error");
             getAllServerContainer.appendChild(errorContainer);
             errorContainer.innerHTML = error;
         });
 
-    // Error: {"error":{"code":"278","message":"A process with name \"Copy_Product_SupplyChain\" already exists."}}
+};
 
+async function deleteProcess(process) {
+    const targetTM1Server = localStorage.getItem("targetTM1Server");
+    const activeItem = localStorage.getItem("activeItem");
+    const processURL = targetTM1Server + activeItem + "('" + activeObject + "')";
 
+    const userpass = sessionStorage.getItem("serverLogin");
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Accept", "application/json;odata.metadata=none");
+    myHeaders.append("TM1-SessionContext", "PAjs Client");
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: process,
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    fetch(processURL, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) })
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            const getAllServerContainer = document.querySelector('.allServerContainer');
+            const errorContainer = document.createElement('div');
+            errorContainer.classList.add("error");
+            getAllServerContainer.appendChild(errorContainer);
+            errorContainer.innerHTML = error;
+        });
 
 };

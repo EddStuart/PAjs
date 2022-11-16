@@ -46,7 +46,7 @@ items = [
     , 'Groups'
     , 'Loggers'
     , 'MemberSets'
-    , 'MessageLogEntries'
+    , 'MessageLogEntries - Disabled'
     , 'ProcessAttributes'
     , 'ProcessDebugContexts'
     , 'Processes'
@@ -57,6 +57,11 @@ items = [
     , 'Threads'
     , 'TransactionLogEntries'
     , 'Users'
+];
+
+// Only includes items reviewed so far
+UIItems = [
+    'Processes'
 ];
 
 const navBar = document.createElement('nav');
@@ -137,9 +142,11 @@ function createRow(k, item) {
     // Treat Key Objects differently
     getWrapper.appendChild(setArticleContainer);
 
-    if (activeItem === 'Cubes' || 'Processes') {
+
+    if (UIItems.includes(activeItem)) {
+        console.log(k);
         if (k === 'Name') {
-            // console.log(k, item);
+            console.log(k, item);
             const itemContainer = document.createElement('div');
             itemContainer.classList.add('itemContainer');
             const itemRow = document.createElement('div');

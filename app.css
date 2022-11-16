@@ -264,3 +264,10 @@ li:hover {
   background-color: #555;
   color: white;
 }
+
+.error {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgb(227, 74, 74);
+  margin: 2px;
+  padding: 5px;
+}
