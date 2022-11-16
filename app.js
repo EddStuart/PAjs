@@ -52,7 +52,7 @@ function selectTile(tile) {
         window.location = "./pages/addAdminHost.html"
     } else {
         if (tile === "Github") {
-            window.location = "./pages/Github.html"
+            window.location = "./pages/github.html"
         }
     }
 }
