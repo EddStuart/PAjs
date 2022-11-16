@@ -117,13 +117,10 @@ function getProcess() {
         });
 }
 
-function postProcess(process) {
+async function postProcess(process) {
     const targetTM1Server = localStorage.getItem("targetTM1Server");
     const activeItem = localStorage.getItem("activeItem");
     const processURL = targetTM1Server + activeItem;
-    // console.log(processURL);
-    // console.log(targetTM1Server);
-    // console.log(activeItem);
 
     const userpass = sessionStorage.getItem("serverLogin");
 
@@ -141,8 +138,43 @@ function postProcess(process) {
         credentials: 'include'
     };
 
+
+    // Promise Pending gives PromiseResult Error Code and Message
+    // await fetch(processURL, requestOptions)
+    //     .then(response => {
+    //         // console.log(response.text())
+    //         console.log(response);
+    //         console.log(response.body);
+    //         console.log(response.message);
+    //         console.log(response.errors);
+    //         console.log(response.text);
+    //     })
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('error', error));
+
+
     fetch(processURL, requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-}
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) })
+            }
+            else {
+                return response.json();
+            }
+        })
+        .catch(error => {
+            console.log('caught it!', error);
+
+            console.log(error);
+
+            const getAllServerContainer = document.querySelector('.allServerContainer');
+            const errorContainer = document.createElement('div');
+            getAllServerContainer.appendChild(errorContainer);
+            errorContainer.innerHTML = error;
+        });
+
+    // Error: {"error":{"code":"278","message":"A process with name \"Copy_Product_SupplyChain\" already exists."}}
+
+
+
+};
