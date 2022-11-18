@@ -136,7 +136,7 @@ function getProcess() {
         .then((process) => {
             // Add Logic here for post patch delete etc..
             const CRUD = localStorage.getItem('CRUD');
-            if(CRUD === 'Post') {
+            if (CRUD === 'Post') {
                 postProcess(process);
                 console.log(CRUD);
             } else if (CRUD === 'Patch') {
@@ -269,7 +269,9 @@ async function deleteProcess(process) {
                 return response.text().then(text => { throw new Error(text) })
             }
             else {
-                return response.json();
+                // There is no response so this errors
+                // commented out for time being to cover issue #6
+                // return response.json();
             }
         })
         .catch(error => {
