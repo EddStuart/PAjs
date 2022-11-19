@@ -160,6 +160,8 @@ async function postProcess(process) {
 
     const userpass = sessionStorage.getItem("serverLogin");
 
+    const getAllServerContainer = document.querySelector('.allServerContainer');
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", "Basic " + userpass);
@@ -176,10 +178,15 @@ async function postProcess(process) {
 
     fetch(processURL, requestOptions)
         .then(response => {
+            console.log(response);
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(text) })
             }
             else {
+                const returnMsg = document.createElement('div');
+                returnMsg.classList.add("success");
+                getAllServerContainer.appendChild(returnMsg);
+                returnMsg.innerHTML = response.statusText + ' process ' + activeObject;
                 return response.json();
             }
         })
@@ -191,7 +198,6 @@ async function postProcess(process) {
 
             console.log(errorMsg);
 
-            const getAllServerContainer = document.querySelector('.allServerContainer');
             const errorContainer = document.createElement('div');
             errorContainer.classList.add("error");
             getAllServerContainer.appendChild(errorContainer);
@@ -207,6 +213,8 @@ async function patchProcess(process) {
     console.log(processURL);
 
     const userpass = sessionStorage.getItem("serverLogin");
+
+    const getAllServerContainer = document.querySelector('.allServerContainer');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -224,16 +232,20 @@ async function patchProcess(process) {
 
     fetch(processURL, requestOptions)
         .then(response => {
+            console.log(response);
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(text) })
             }
             else {
+                const returnMsg = document.createElement('div');
+                returnMsg.classList.add("success");
+                getAllServerContainer.appendChild(returnMsg);
+                returnMsg.innerHTML = response.statusText + ' process ' + activeObject + ' updated';
                 return response.json();
             }
         })
         .catch(error => {
             console.log(error);
-            const getAllServerContainer = document.querySelector('.allServerContainer');
             const errorContainer = document.createElement('div');
             errorContainer.classList.add("error");
             getAllServerContainer.appendChild(errorContainer);
@@ -248,6 +260,8 @@ async function deleteProcess(process) {
     const processURL = targetTM1Server + activeItem + "('" + activeObject + "')";
 
     const userpass = sessionStorage.getItem("serverLogin");
+
+    const getAllServerContainer = document.querySelector('.allServerContainer');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -265,13 +279,15 @@ async function deleteProcess(process) {
 
     fetch(processURL, requestOptions)
         .then(response => {
+            console.log(response);
             if (!response.ok) {
                 return response.text().then(text => { throw new Error(text) })
             }
             else {
-                // There is no response so this errors
-                // commented out for time being to cover issue #6
-                // return response.json();
+                const returnMsg = document.createElement('div');
+                returnMsg.classList.add("success");
+                getAllServerContainer.appendChild(returnMsg);
+                returnMsg.innerHTML = 'Process ' + activeObject + ' deleted';
             }
         })
         .catch(error => {
