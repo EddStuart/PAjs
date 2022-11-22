@@ -113,10 +113,11 @@ function getProcess() {
     const processParams = '?$select=Name,HasSecurityAccess,PrologProcedure,MetadataProcedure,DataProcedure,EpilogProcedure,Parameters,Variables,UIData,VariablesUIData,DataSource/Type,DataSource/dataSourceNameForServer,DataSource/dataSourceNameForClient,DataSource/asciiDecimalSeparator,DataSource/asciiDelimiterChar,DataSource/asciiDelimiterType,DataSource/asciiHeaderRecords,DataSource/asciiQuoteCharacter,DataSource/asciiThousandSeparator,DataSource/view,DataSource/query,DataSource/userName,DataSource/password,DataSource/usesUnicode,DataSource/subset'
     const processURL = activeTM1Server + activeItem + '(\'' + activeObject + '\')' + processParams;
     const userpass = sessionStorage.getItem("serverLogin");
+    const authHeader = sessionStorage.getItem('authHeader');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Authorization", authHeader);
     myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
 
@@ -159,12 +160,13 @@ async function postProcess(process) {
     const processURL = targetTM1Server + activeItem;
 
     const userpass = sessionStorage.getItem("serverLogin");
+    const authHeader = sessionStorage.getItem('authHeader');
 
     const getAllServerContainer = document.querySelector('.allServerContainer');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Authorization", authHeader);
     myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
 
@@ -213,12 +215,13 @@ async function patchProcess(process) {
     console.log(processURL);
 
     const userpass = sessionStorage.getItem("serverLogin");
+    const authHeader = sessionStorage.getItem('authHeader');
 
     const getAllServerContainer = document.querySelector('.allServerContainer');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Authorization", authHeader);
     myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
 
@@ -260,12 +263,13 @@ async function deleteProcess(process) {
     const processURL = targetTM1Server + activeItem + "('" + activeObject + "')";
 
     const userpass = sessionStorage.getItem("serverLogin");
+    const authHeader = sessionStorage.getItem('authHeader');
 
     const getAllServerContainer = document.querySelector('.allServerContainer');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Authorization", authHeader);
     myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
 

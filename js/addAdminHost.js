@@ -135,6 +135,14 @@ function updateAdminHost() {
 }
 
 function setAdminURL() {
+    // Build up serverStub for older servers
+    let serverStub =
+        document.getElementById('sTransferProtocol').value +
+        '://' +
+        document.getElementById('sAdminHostName').value;
+
+    localStorage.setItem('serverStub', serverStub);
+
     // Build up the admimhost string via inputs from the UI
     let newAdminHost =
         document.getElementById('sTransferProtocol').value +
