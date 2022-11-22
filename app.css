@@ -102,7 +102,6 @@ div.twoColForm input {
 
 div.oneColForm {
   display: flex;
-  /* justify-content: center; */
   align-self: center;
   flex-direction: row;
   margin: 5px;
@@ -119,8 +118,6 @@ button:hover {
 }
 
 .serverContainer {
-  /* width: 30%; */
-  /* border-radius: 5px; */
   box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5);
   margin: 10px;
   padding: 5px;
@@ -138,6 +135,7 @@ button:hover {
 
 .loginContainer {
   padding: 1rem;
+  margin: 1rem;
   border-style: solid;
 }
 
@@ -171,7 +169,6 @@ li {
   text-decoration: none;
 }
 
-/* Change the link color on hover */
 li:hover {
   background-color: #555;
   color: white;
@@ -181,8 +178,6 @@ li:hover {
   background-color: #555;
   color: white;
 }
-
-/* End of Standard CSS here */
 
 .wrapperIncNav {
   display: grid;
@@ -250,10 +245,8 @@ li:hover {
 
 .itemContainer {
   flex: auto;
-  /* width: 10%; */
   border-radius: 2px;
   border-style: solid;
-  /* box-shadow: 0 3px 15px rgba(100, 100, 100, 0.5); */
   margin: 2px;
   padding: 5px;
   text-align: center;

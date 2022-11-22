@@ -95,10 +95,11 @@ function selectItem(item) {
 function loadItem() {
     let serverUrl = activeTM1Server + activeItem;
     const userpass = sessionStorage.getItem("serverLogin");
+    const authHeader = sessionStorage.getItem('authHeader');
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", "Basic " + userpass);
+    myHeaders.append("Authorization", authHeader);
     myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
 
@@ -192,12 +193,12 @@ function selectRow(k) {
 function selectObject(item) {
     console.log(item);
     localStorage.setItem("activeObject", item);
-    if(activeItem === 'Processes') {
+    if (activeItem === 'Processes') {
         window.location = '../pages/process.html';
     } else {
         window.location = '../pages/object.html';
     }
-    
+
 }
 
 
