@@ -1,3 +1,5 @@
+AddAdminHost
+
 // Set Key Variables
 const sAPI = "/api/v1/";
 
@@ -135,14 +137,6 @@ function updateAdminHost() {
 }
 
 function setAdminURL() {
-    // Build up serverStub for older servers
-    let serverStub =
-        document.getElementById('sTransferProtocol').value +
-        '://' +
-        document.getElementById('sAdminHostName').value;
-
-    localStorage.setItem('serverStub', serverStub);
-
     // Build up the admimhost string via inputs from the UI
     let newAdminHost =
         document.getElementById('sTransferProtocol').value +
@@ -162,6 +156,11 @@ function setAdminURL() {
 
 function selectAdminHost(adminHost) {
     localStorage.setItem("activeAdminHost", JSON.stringify(adminHost));
+
+    let findEndofStub = adminHost.lastIndexOf(':');
+    let serverStub = adminHost.slice(0, findEndofStub);
+    localStorage.setItem("serverStub", serverStub);
+
     window.location = "./adminHost.html"
 }
 

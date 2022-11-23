@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Process Execute Example</title>
+  </head>
+  <body>
+    <h1>Process Execute Example</h1>
+    <button class="processName" onclick="myProcess()">Placeholder</button>
+    <div class="processResponse"></div>
+
+    <script>
+      const processName = document.querySelector(".processName");
+      processName.innerHTML = "cache_views";
+
+      function myProcess() {
+        const processResponse = document.querySelector(".processResponse");
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Basic YWRtaW46YXBwbGU=");
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+
+        fetch(
+          "http://Spitfire-Prod:52670/api/v1/Processes('cache_views')/tm1.ExecuteWithReturn",
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then(
+            (result) =>
+              (processResponse.innerHTML = result.ProcessExecuteStatusCode)
+          )
+          .catch((error) => console.log("error", error));
+      }
+    </script>
+  </body>
+</html>

@@ -54,11 +54,12 @@ function createServerCard(server) {
 getAdminHostServers();
 
 function selectServer(server) {
-    const serverStub = localStorage.getItem('serverStub');
+    serverStub = localStorage.getItem("serverStub");
 
     let activeTM1Server =
         // server.Host works but older implementations do not use Host so we use a backward compatible method
         serverStub + ':' + server.HTTPPortNumber + '/api/v1/';
+
     localStorage.setItem("activeTM1Server", JSON.stringify(activeTM1Server));
 
     window.location = "../pages/login.html"
