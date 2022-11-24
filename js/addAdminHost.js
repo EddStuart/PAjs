@@ -1,5 +1,3 @@
-AddAdminHost
-
 // Set Key Variables
 const sAPI = "/api/v1/";
 
