@@ -116,14 +116,20 @@ async function serverLogin() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", authHeader);
-    myHeaders.append("Accept", "application/json;odata.metadata=full");
+    myHeaders.append("Accept", "application/json;odata.metadata=none");
     myHeaders.append("TM1-SessionContext", "PAjs Client");
+    // myHeaders.append("Access-Control-Allow-Origin:", "*");
+    // myHeaders.append("Access-Control-Allow-Methods:", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    // myHeaders.append("Access-Control-Allow-Headers:", "*");
+    // myHeaders.append("Access-Control-Max-Age:", "86400");
+
+
 
     var requestOptions = {
         method: 'GET',
         headers: myHeaders,
-        redirect: 'follow',
-        credentials: 'include'
+        redirect: 'follow'
+        // credentials: 'include'
     };
 
     const res = await fetch(serverUrl, requestOptions);
