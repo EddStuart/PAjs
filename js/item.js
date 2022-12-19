@@ -61,7 +61,19 @@ items = [
 
 // Only includes items reviewed so far
 UIItems = [
-    'Processes'
+    'ActiveUser',
+    'ApplicationContextFacets',
+    'Chores',
+    'Contents',
+    'CubeAttributes',
+    'Cubes',
+    'DimensionAttributes',
+    'Dimensions',
+    'Groups',
+    'Loggers',
+    'ProcessAttributes',
+    'Processes',
+    'Users'
 ];
 
 const navBar = document.createElement('nav');
@@ -195,6 +207,8 @@ function selectObject(item) {
     localStorage.setItem("activeObject", item);
     if (activeItem === 'Processes') {
         window.location = '../pages/process.html';
+    } else if (activeItem === 'Chores') {
+        window.location = '../pages/chore.html';
     } else {
         window.location = '../pages/object.html';
     }
