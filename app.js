@@ -20,7 +20,7 @@ getWrapperUI.appendChild(setArticleContainer);
 function buildTiles() {
     tiles = [
         'Planning Analytics'
-        , 'Github'
+        , 'GitHub'
     ];
 
     for (tile of tiles) {
@@ -51,7 +51,7 @@ function selectTile(tile) {
     if (tile === "Planning Analytics") {
         window.location = "./pages/addAdminHost.html"
     } else {
-        if (tile === "Github") {
+        if (tile === "GitHub") {
             window.location = "./pages/github.html"
         }
     }
