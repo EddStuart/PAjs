@@ -51,6 +51,17 @@ article {
   background-color: lightblue;
 }
 
+.repoCard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 1em;
+}
+
+.repoCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  background-color: lightblue;
+}
+
 .container {
   padding: 2px 16px;
 }
@@ -66,6 +77,20 @@ article {
 }
 
 .adminHostName {
+  padding: 0.75rem;
+}
+
+/* Github Page */
+.userAccountContainer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.userAccountContainer:hover {
+  background-color: lightblue;
+}
+
+.userAccountName {
   padding: 0.75rem;
 }
 
@@ -105,16 +130,12 @@ div.oneColForm {
   align-self: center;
   flex-direction: row;
   margin: 5px;
-  width: 20%;
+  width: 30%;
 }
 
 div.newAdminHost {
   border-style: solid;
   margin: 2.5px;
-}
-
-button:hover {
-  background-color: lightblue;
 }
 
 .serverContainer {
@@ -147,6 +168,10 @@ button:hover {
 button {
   padding: 1rem;
   margin: 1rem;
+}
+
+button:hover {
+  background-color: lightblue;
 }
 
 nav {
